@@ -23,9 +23,13 @@
 
 
 var express = require("express");
-var app = express();
 const bodyParser = require("body-parser");
+var cookieParser = require('cookie-parser');
+
+var app = express();
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
+
 app.set("view engine", "ejs");
 var PORT = process.env.PORT || 8080; // default port 8080
 
@@ -33,6 +37,7 @@ var urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
+
 
 
 
@@ -69,7 +74,11 @@ app.get("/urls", (req, res) => {
   // for(var k in templateVars.urls){
   //   console.log(k);
   // }
-  res.render("urls_index.ejs", {templateVars: urlDatabase});
+  let templateVars = {
+  username: req.cookies["username"],
+  // ... any other vars
+  };
+  res.render("urls_index.ejs", {templateVar: urlDatabase},templateVars);
 });
 
   // let templateVars = { urls: urlDatabase };
@@ -89,7 +98,13 @@ function generateRandomString() {
 }
 
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
+
+  let templateVars = {
+  username: req.cookies["username"],
+  // ... any other vars
+};
+console.log(req.cookies["username"]);
+  res.render("urls_new",templateVars);
 });
 
 app.post("/urls", (req, res) => {
@@ -127,9 +142,13 @@ app.get("/u/:shortURL", (req, res) => {
 // request routing
 
 app.get("/urls/:id", (req, res) => {
-  let templateVars = { shortURL: req.params.id};
+  // let templateVar = { shortURL: req.params.id};  not used
+  let templateVars = {
+  username: req.cookies["username"],
+  // ... any other vars
+};
 
-  res.render("urls_show.ejs", { shortURL: req.params.id, longURL: urlDatabase[req.params.id]});
+  res.render("urls_show.ejs", templateVars,{ shortURL: req.params.id, longURL: urlDatabase[req.params.id]});
 });
 
 app.post("/urls/:id", (req, res) => {
@@ -140,6 +159,35 @@ app.post("/urls/:id", (req, res) => {
   urlDatabase[short] = newUrl;
   res.redirect("/urls/"+short);
 });
+
+
+
+
+
+
+app.get("/login", (req, res) => {
+
+  console.log(req.cookies);
+  let templateVars = {
+    username: req.cookies.username,
+  // ... any other vars
+  };
+  console.log("currently "+templateVars.username+" is logged in");
+  res.render("./partials/_header.ejs",templateVars);
+})
+
+
+
+app.post("/login", (req, res) => {
+  console.log(req.body.username);
+  res.cookie('username',req.body.username);
+  res.redirect("/");
+})
+
+
+
+
+
 
 
 

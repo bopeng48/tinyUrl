@@ -4,8 +4,8 @@
   <title>TinyApp</title>
 </head>
 <body>
-    <% for(var k in templateVars) {%>
-   <p> <%= templateVars[k] %>, <%= k%> </p>
+    <% for(var k in templateVar) {%>
+   <p> <%= templateVar[k] %>, <%= k%> </p>
 
 <form method="POST" action="/urls/<%=k%>/delete">
 <input type = "submit" value = "delete">
