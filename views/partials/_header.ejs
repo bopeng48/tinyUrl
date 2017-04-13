@@ -1,10 +1,17 @@
 <h1>  test </h1>
+
+
+
  <% if(username === undefined) { %>
 <form action="/login" method="POST" style="margin:150px;">
 <input type="text" name="username" placeholder="log in" style="width: 300px">
+<input type="password" name="password" placeholder="password" style="width: 300px">
 <input type="submit" value="Submit">
 </form>
 <% }%>
+
+
+
 
 <% if(username !== undefined) { %>
   <h2> you are already logged in </h2>
@@ -12,3 +19,8 @@
  <input type="submit" value="logout">
  </form>
 <% } %>
+
+
+<a href= "/register">register</a>
+
+ <a href="/login">login</a>
