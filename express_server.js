@@ -184,6 +184,14 @@ app.post("/login", (req, res) => {
   res.redirect("/");
 })
 
+app.post("/logout/:username", (req, res) => {
+  let user = req.params.username;
+  console.log(user, "is trying to log out");
+  console.log(typeof user);
+  res.clearCookie("username",user);
+  console.log(user, "is looged out");
+  res.redirect("/login");
+})
 
 
 
