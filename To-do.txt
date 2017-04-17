@@ -1,0 +1,15 @@
+BUG REPORT:
+
+(1):
+  app.post("/urls", (req, res) doesn’t work properly
+  runs all the way till res.redirect(add);
+  error message is: TypeError: callback is not a function
+
+(1.1): follow up
+  in line 215, req.params.id.longURL is undefined, not sure what
+  req.params.id is
+
+closed. bug fixed
+
+
+

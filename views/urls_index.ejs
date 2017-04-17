@@ -4,16 +4,20 @@
   <title>TinyApp</title>
 </head>
 <body>
+    <h1> Your links </h1>
     <% for(var k in templateVar) {%>
-   <p> <%= templateVar[k] %>, <%= k%> </p>
-
-<form method="POST" action="/urls/<%=k%>/delete">
-<input type = "submit" value = "delete">
-</form>
-<form method="POST" action="/urls/<%=k%>/update">
-<input type = "submit" value = "uodate">
-</form>
-
+      <% if(templateVar[k]["userID"] === user_id) { %>
+          <h5> <%=templateVar[k]["longURL"] %> </h5>
+          <form method="POST" action="/urls/<%=k%>/delete">
+        <input type = "submit" value = "delete">
+        </form>
+        <form method="POST" action="/urls/<%=k%>/update">
+        <input type = "submit" value = "update">
+        </form>
+      <% } %>
     <% } %>
+<p> <a href="/urls/new"> Create a new link </a> </p>
+
+
 </body>
 </html>
